@@ -5,6 +5,8 @@
  * Encourages visitors to reach out via the contact page.
  */
 
+import Link from "next/link";
+
 export default function ContactCTA() {
   return (
     <section className="px-6 py-16 text-center">
@@ -13,12 +15,12 @@ export default function ContactCTA() {
         Have a project in mind? I would love to hear from you. Let us build
         something great together.
       </p>
-      <a
+      <Link
         href="/contact"
         className="inline-block px-6 py-3 bg-gray-900 text-white rounded hover:bg-gray-700 transition-colors"
       >
         Contact Me
-      </a>
+      </Link>
     </section>
   );
 }
