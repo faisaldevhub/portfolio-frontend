@@ -1,4 +1,4 @@
-import { WPPage, WPMedia } from "@/types/wordpress";
+import { WPPage, WPMedia, WPProject } from "@/types/wordpress";
 
 /**
  * WordPress API Communication Layer
@@ -148,4 +148,42 @@ export async function getAboutPage(): Promise<WPPage | null> {
  */
 export async function getMediaById(id: number): Promise<WPMedia> {
   return fetchAPI<WPMedia>(`/media/${id}`);
+}
+
+// ---------------------------------------------------------------------------
+// Project helpers (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Fetch all published projects.
+ *
+ * Calls the /project endpoint (CPT REST base) and returns an array
+ * of WPProject objects including ACF custom fields.
+ *
+ * @returns An array of all published projects.
+ *
+ * @example
+ *   const projects = await getProjects();
+ *   projects.forEach(p => console.log(p.acf.tech_stack));
+ */
+export async function getProjects(): Promise<WPProject[]> {
+  return fetchAPI<WPProject[]>("/project");
+}
+
+/**
+ * Fetch a single project by its URL slug.
+ *
+ * Queries the /project endpoint filtered by slug and returns the first
+ * matching project, or `null` if no project with that slug exists.
+ *
+ * @param slug - The URL-friendly slug (e.g. "portfolio-website").
+ * @returns The matching WPProject, or `null` if not found.
+ *
+ * @example
+ *   const project = await getProjectBySlug("portfolio-website");
+ *   if (project) console.log(project.acf.github_url);
+ */
+export async function getProjectBySlug(slug: string): Promise<WPProject | null> {
+  const projects = await fetchAPI<WPProject[]>(`/project?slug=${slug}`);
+  return projects.length > 0 ? projects[0] : null;
 }

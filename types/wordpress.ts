@@ -86,3 +86,54 @@ export interface WPMedia {
     rendered: string;
   };
 }
+
+// ---------------------------------------------------------------------------
+// Projects (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Represents a WordPress Project object (wp/v2/project).
+ *
+ * Custom fields are managed by ACF and appear under the `acf`
+ * object in the REST API response.
+ */
+export interface WPProject {
+  /** Unique identifier for the project. */
+  id: number;
+
+  /** URL-friendly slug (e.g. "portfolio-website"). */
+  slug: string;
+
+  /** Project title. */
+  title: {
+    rendered: string;
+  };
+
+  /** Full HTML content/description of the project. */
+  content: {
+    rendered: string;
+  };
+
+  /** Short excerpt/summary of the project. */
+  excerpt: {
+    rendered: string;
+  };
+
+  /** ID of the featured media attachment (0 if none). */
+  featured_media: number;
+
+  /** Custom fields exposed by ACF via the REST API. */
+  acf: {
+    /** Live project URL. */
+    project_url: string;
+
+    /** GitHub repository URL. */
+    github_url: string;
+
+    /** Comma-separated list of technologies used. */
+    tech_stack: string;
+
+    /** Client or project owner name. */
+    client_name: string;
+  };
+}
