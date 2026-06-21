@@ -1,12 +1,14 @@
 import Hero from "@/components/Hero";
 import AboutPreview from "@/components/AboutPreview";
 import FeaturedProjects from "@/components/FeaturedProjects";
-import FeaturedTestimonials from "@/components/FeaturedTestimonials";
+import FeaturedCaseStudies from "@/components/FeaturedCaseStudies";
 import FeaturedServices from "@/components/FeaturedServices";
+import FeaturedTestimonials from "@/components/FeaturedTestimonials";
 import ContactCTA from "@/components/ContactCTA";
 import {
   getAboutPage,
   getProjects,
+  getCaseStudies,
   getTestimonials,
   getServices,
   getMediaById,
@@ -14,10 +16,11 @@ import {
 
 export default async function Home() {
   // Fetch all data sources in parallel
-  const [aboutPage, allProjects, allTestimonials, allServices] =
+  const [aboutPage, allProjects, allCaseStudies, allTestimonials, allServices] =
     await Promise.all([
       getAboutPage(),
       getProjects(),
+      getCaseStudies(),
       getTestimonials(),
       getServices(),
     ]);
@@ -55,6 +58,34 @@ export default async function Home() {
         imageAlt,
         clientName: project.acf.client_name,
         techStack: project.acf.tech_stack,
+      };
+    })
+  );
+
+  // Take the latest 3 case studies and resolve their featured images in parallel
+  const latestCaseStudies = allCaseStudies.slice(0, 3);
+
+  const featuredCaseStudies = await Promise.all(
+    latestCaseStudies.map(async (cs) => {
+      let imageUrl: string | null = null;
+      let imageAlt: string | null = null;
+
+      if (cs.featured_media > 0) {
+        const media = await getMediaById(cs.featured_media);
+        imageUrl = media.source_url;
+        imageAlt = media.alt_text;
+      }
+
+      return {
+        id: cs.id,
+        slug: cs.slug,
+        title: cs.title.rendered,
+        clientName: cs.acf.client_name,
+        industry: cs.acf.industry,
+        challenge: cs.acf.challenge,
+        technologies: cs.acf.technologies_used,
+        imageUrl,
+        imageAlt,
       };
     })
   );
@@ -106,6 +137,7 @@ export default async function Home() {
         imageAlt={aboutImageAlt}
       />
       <FeaturedProjects projects={featuredProjects} />
+      <FeaturedCaseStudies caseStudies={featuredCaseStudies} />
       <FeaturedServices services={featuredServicesList} />
       <FeaturedTestimonials testimonials={featuredTestimonials} />
       <ContactCTA />

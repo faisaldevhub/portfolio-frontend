@@ -274,27 +274,45 @@ Verified:
 
 ### Case Studies
 
+Status: COMPLETE
+
+Routes:
+
+/case-studies
+/case-studies/[slug]
+
+Completed:
+
+* WPCaseStudy TypeScript interface
+* getCaseStudies() API helper
+* getCaseStudyBySlug() API helper
+* CaseStudyCard component
+* CaseStudiesGrid component
+* FeaturedCaseStudies homepage section (latest 3)
+* Case studies listing page
+* Case study detail page (Challenge → Solution → Results)
+* Industry badges and tech tags
+* Live URL link
+* Dynamic SEO metadata
+* 404 handling
+
+Verified:
+
+* /wp-json/wp/v2/case-study
+
+---
+
+# Current Phase
+
+## Phase 10
+
+### SEO & Metadata
+
 Status: NEXT
 
 ---
 
 # Upcoming Phases
-
-## Phase 9
-
-### Case Studies
-
-Advanced project pages.
-
-Features:
-
-* Challenge
-* Solution
-* Results
-* Metrics
-* Gallery
-
----
 
 ## Phase 10
 
@@ -400,5 +418,5 @@ git push origin main
 
 Current Next Task:
 
-Phase 9
-Case Studies
+Phase 10
+SEO & Metadata

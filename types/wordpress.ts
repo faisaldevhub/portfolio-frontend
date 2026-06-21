@@ -274,3 +274,66 @@ export interface WPService {
     pricing: string;
   };
 }
+
+// ---------------------------------------------------------------------------
+// Case Studies (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Represents a WordPress Case Study object (wp/v2/case-study).
+ *
+ * The full case study narrative is in `content.rendered`.
+ * Structured fields are managed by ACF under `acf`.
+ */
+export interface WPCaseStudy {
+  /** Unique identifier for the case study. */
+  id: number;
+
+  /** URL-friendly slug. */
+  slug: string;
+
+  /** Case study title. */
+  title: {
+    rendered: string;
+  };
+
+  /** Full HTML content of the case study. */
+  content: {
+    rendered: string;
+  };
+
+  /** Short excerpt of the case study. */
+  excerpt: {
+    rendered: string;
+  };
+
+  /** ID of the featured media attachment (0 if none). */
+  featured_media: number;
+
+  /** Custom fields exposed by ACF via the REST API. */
+  acf: {
+    /** Client's full name or company. */
+    client_name: string;
+
+    /** Industry or sector. */
+    industry: string;
+
+    /** Duration of the project (e.g. "3 Weeks"). */
+    project_duration: string;
+
+    /** The problem or challenge the client faced. */
+    challenge: string;
+
+    /** The solution implemented. */
+    solution: string;
+
+    /** The outcomes and results achieved. */
+    results: string;
+
+    /** Live project URL. */
+    live_url: string;
+
+    /** Comma-separated list of technologies used. */
+    technologies_used: string;
+  };
+}

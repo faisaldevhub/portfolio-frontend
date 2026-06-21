@@ -1,4 +1,4 @@
-import { WPPage, WPPost, WPCategory, WPMedia, WPProject, WPTestimonial, WPService } from "@/types/wordpress";
+import { WPPage, WPPost, WPCategory, WPMedia, WPProject, WPTestimonial, WPService, WPCaseStudy } from "@/types/wordpress";
 
 /**
  * WordPress API Communication Layer
@@ -289,4 +289,36 @@ export async function getPostBySlug(slug: string): Promise<WPPost | null> {
  */
 export async function getCategories(): Promise<WPCategory[]> {
   return fetchAPI<WPCategory[]>("/categories");
+}
+
+// ---------------------------------------------------------------------------
+// Case Study helpers (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Fetch all published case studies.
+ *
+ * @returns An array of all published case studies.
+ *
+ * @example
+ *   const studies = await getCaseStudies();
+ *   studies.forEach(s => console.log(s.acf.challenge));
+ */
+export async function getCaseStudies(): Promise<WPCaseStudy[]> {
+  return fetchAPI<WPCaseStudy[]>("/case-study");
+}
+
+/**
+ * Fetch a single case study by its URL slug.
+ *
+ * @param slug - The URL-friendly slug.
+ * @returns The matching WPCaseStudy, or `null` if not found.
+ *
+ * @example
+ *   const study = await getCaseStudyBySlug("aj-oracle-music-website");
+ *   if (study) console.log(study.acf.results);
+ */
+export async function getCaseStudyBySlug(slug: string): Promise<WPCaseStudy | null> {
+  const studies = await fetchAPI<WPCaseStudy[]>(`/case-study?slug=${slug}`);
+  return studies.length > 0 ? studies[0] : null;
 }
