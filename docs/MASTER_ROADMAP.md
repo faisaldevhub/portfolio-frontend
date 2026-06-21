@@ -206,33 +206,44 @@ Verified:
 
 ### Services System
 
+Status: COMPLETE
+
+Routes:
+
+/services
+/services/[slug]
+
+Completed:
+
+* WPService TypeScript interface
+* getServices() API helper
+* getServiceBySlug() API helper
+* ServiceCard component
+* ServicesGrid component
+* FeaturedServices homepage section (WordPress-driven)
+* Services listing page
+* Service detail page with featured image, icon, pricing, content
+* Removed hardcoded ServicesPreview
+* Dynamic SEO metadata
+* 404 handling
+
+Verified:
+
+* /wp-json/wp/v2/service
+
+---
+
+# Current Phase
+
+## Phase 8
+
+### Blog System
+
 Status: NEXT
 
 ---
 
 # Upcoming Phases
-
-## Phase 7
-
-### Services System
-
-WordPress CPT:
-
-service
-
-Fields:
-
-* Service Name
-* Description
-* Icon
-* Pricing (optional)
-
-Frontend:
-
-* Dynamic services section
-* Services page
-
----
 
 ## Phase 8
 
@@ -374,5 +385,5 @@ git push origin main
 
 Current Next Task:
 
-Phase 7
-Services System
+Phase 8
+Blog System

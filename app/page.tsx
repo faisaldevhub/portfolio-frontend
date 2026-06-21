@@ -2,22 +2,25 @@ import Hero from "@/components/Hero";
 import AboutPreview from "@/components/AboutPreview";
 import FeaturedProjects from "@/components/FeaturedProjects";
 import FeaturedTestimonials from "@/components/FeaturedTestimonials";
-import ServicesPreview from "@/components/ServicesPreview";
+import FeaturedServices from "@/components/FeaturedServices";
 import ContactCTA from "@/components/ContactCTA";
 import {
   getAboutPage,
   getProjects,
   getTestimonials,
+  getServices,
   getMediaById,
 } from "@/lib/wordpress";
 
 export default async function Home() {
-  // Fetch About page, projects, and testimonials in parallel
-  const [aboutPage, allProjects, allTestimonials] = await Promise.all([
-    getAboutPage(),
-    getProjects(),
-    getTestimonials(),
-  ]);
+  // Fetch all data sources in parallel
+  const [aboutPage, allProjects, allTestimonials, allServices] =
+    await Promise.all([
+      getAboutPage(),
+      getProjects(),
+      getTestimonials(),
+      getServices(),
+    ]);
 
   // Resolve About featured image
   let aboutImageUrl: string | null = null;
@@ -84,6 +87,16 @@ export default async function Home() {
     })
   );
 
+  // Map services to flat props (no image resolution needed for cards)
+  const featuredServicesList = allServices.map((s) => ({
+    id: s.id,
+    slug: s.slug,
+    icon: s.acf.icon,
+    title: s.title.rendered,
+    shortDescription: s.acf.short_description,
+    pricing: s.acf.pricing,
+  }));
+
   return (
     <>
       <Hero />
@@ -93,8 +106,8 @@ export default async function Home() {
         imageAlt={aboutImageAlt}
       />
       <FeaturedProjects projects={featuredProjects} />
+      <FeaturedServices services={featuredServicesList} />
       <FeaturedTestimonials testimonials={featuredTestimonials} />
-      <ServicesPreview />
       <ContactCTA />
     </>
   );

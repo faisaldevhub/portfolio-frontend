@@ -1,4 +1,4 @@
-import { WPPage, WPMedia, WPProject, WPTestimonial } from "@/types/wordpress";
+import { WPPage, WPMedia, WPProject, WPTestimonial, WPService } from "@/types/wordpress";
 
 /**
  * WordPress API Communication Layer
@@ -206,4 +206,42 @@ export async function getProjectBySlug(slug: string): Promise<WPProject | null> 
  */
 export async function getTestimonials(): Promise<WPTestimonial[]> {
   return fetchAPI<WPTestimonial[]>("/testimonial");
+}
+
+// ---------------------------------------------------------------------------
+// Service helpers (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Fetch all published services.
+ *
+ * Calls the /service endpoint and returns an array
+ * of WPService objects including ACF custom fields.
+ *
+ * @returns An array of all published services.
+ *
+ * @example
+ *   const services = await getServices();
+ *   services.forEach(s => console.log(s.acf.short_description));
+ */
+export async function getServices(): Promise<WPService[]> {
+  return fetchAPI<WPService[]>("/service");
+}
+
+/**
+ * Fetch a single service by its URL slug.
+ *
+ * Queries the /service endpoint filtered by slug and returns the first
+ * matching service, or `null` if no service with that slug exists.
+ *
+ * @param slug - The URL-friendly slug (e.g. "wordpress-website-development").
+ * @returns The matching WPService, or `null` if not found.
+ *
+ * @example
+ *   const service = await getServiceBySlug("wordpress-website-development");
+ *   if (service) console.log(service.acf.pricing);
+ */
+export async function getServiceBySlug(slug: string): Promise<WPService | null> {
+  const services = await fetchAPI<WPService[]>(`/service?slug=${slug}`);
+  return services.length > 0 ? services[0] : null;
 }

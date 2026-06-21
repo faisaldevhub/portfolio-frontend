@@ -191,3 +191,51 @@ export interface WPTestimonial {
     linkedin_url: string;
   };
 }
+
+// ---------------------------------------------------------------------------
+// Services (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Represents a WordPress Service object (wp/v2/service).
+ *
+ * The full service description is in `content.rendered`.
+ * Summary fields are managed by ACF under `acf`.
+ */
+export interface WPService {
+  /** Unique identifier for the service. */
+  id: number;
+
+  /** URL-friendly slug (e.g. "wordpress-website-development"). */
+  slug: string;
+
+  /** Service title. */
+  title: {
+    rendered: string;
+  };
+
+  /** Full HTML content/description of the service. */
+  content: {
+    rendered: string;
+  };
+
+  /** Short excerpt of the service. */
+  excerpt: {
+    rendered: string;
+  };
+
+  /** ID of the featured media attachment (0 if none). */
+  featured_media: number;
+
+  /** Custom fields exposed by ACF via the REST API. */
+  acf: {
+    /** Icon emoji or class name. */
+    icon: string;
+
+    /** One-line service description for cards. */
+    short_description: string;
+
+    /** Pricing info (e.g. "Starting at $400"). */
+    pricing: string;
+  };
+}
