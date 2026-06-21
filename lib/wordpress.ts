@@ -1,4 +1,4 @@
-import { WPPage, WPMedia, WPProject, WPTestimonial, WPService } from "@/types/wordpress";
+import { WPPage, WPPost, WPCategory, WPMedia, WPProject, WPTestimonial, WPService } from "@/types/wordpress";
 
 /**
  * WordPress API Communication Layer
@@ -244,4 +244,49 @@ export async function getServices(): Promise<WPService[]> {
 export async function getServiceBySlug(slug: string): Promise<WPService | null> {
   const services = await fetchAPI<WPService[]>(`/service?slug=${slug}`);
   return services.length > 0 ? services[0] : null;
+}
+
+// ---------------------------------------------------------------------------
+// Blog helpers (WordPress Posts)
+// ---------------------------------------------------------------------------
+
+/**
+ * Fetch all published blog posts.
+ *
+ * @returns An array of all published posts, newest first.
+ *
+ * @example
+ *   const posts = await getPosts();
+ *   posts.forEach(p => console.log(p.title.rendered));
+ */
+export async function getPosts(): Promise<WPPost[]> {
+  return fetchAPI<WPPost[]>("/posts");
+}
+
+/**
+ * Fetch a single blog post by its URL slug.
+ *
+ * @param slug - The URL-friendly slug (e.g. "my-first-post").
+ * @returns The matching WPPost, or `null` if not found.
+ *
+ * @example
+ *   const post = await getPostBySlug("my-first-post");
+ *   if (post) console.log(post.content.rendered);
+ */
+export async function getPostBySlug(slug: string): Promise<WPPost | null> {
+  const posts = await fetchAPI<WPPost[]>(`/posts?slug=${slug}`);
+  return posts.length > 0 ? posts[0] : null;
+}
+
+/**
+ * Fetch all categories.
+ *
+ * @returns An array of all categories.
+ *
+ * @example
+ *   const categories = await getCategories();
+ *   categories.forEach(c => console.log(c.name));
+ */
+export async function getCategories(): Promise<WPCategory[]> {
+  return fetchAPI<WPCategory[]>("/categories");
 }

@@ -53,6 +53,9 @@ export interface WPPost {
   /** URL-friendly slug (e.g. "my-first-post"). */
   slug: string;
 
+  /** ISO 8601 date string (e.g. "2026-06-19T19:05:57"). */
+  date: string;
+
   /** Post title returned by WordPress. */
   title: {
     rendered: string;
@@ -62,6 +65,38 @@ export interface WPPost {
   content: {
     rendered: string;
   };
+
+  /** Short excerpt of the post. */
+  excerpt: {
+    rendered: string;
+  };
+
+  /** ID of the featured media attachment (0 if none). */
+  featured_media: number;
+
+  /** Array of category IDs assigned to this post. */
+  categories: number[];
+}
+
+// ---------------------------------------------------------------------------
+// Categories
+// ---------------------------------------------------------------------------
+
+/**
+ * Represents a WordPress Category object (wp/v2/categories).
+ */
+export interface WPCategory {
+  /** Unique identifier for the category. */
+  id: number;
+
+  /** Category name. */
+  name: string;
+
+  /** URL-friendly slug. */
+  slug: string;
+
+  /** Number of posts in this category. */
+  count: number;
 }
 
 // ---------------------------------------------------------------------------

@@ -239,31 +239,46 @@ Verified:
 
 ### Blog System
 
-Status: NEXT
-
----
-
-# Upcoming Phases
-
-## Phase 8
-
-### Blog System
-
-WordPress Posts
+Status: COMPLETE
 
 Routes:
 
 /blog
 /blog/[slug]
 
-Features:
+Completed:
 
-* Blog listing
-* Blog detail pages
-* Categories
-* SEO
+* Expanded WPPost type (excerpt, featured_media, categories, date)
+* WPCategory TypeScript interface
+* getPosts() API helper
+* getPostBySlug() API helper
+* getCategories() API helper
+* BlogCard component (image, date, categories, excerpt)
+* BlogGrid component
+* Blog listing page with category resolution
+* Blog detail page with featured image, categories, full content
+* Dynamic SEO metadata
+* 404 handling
+* Parallel image resolution
+
+Verified:
+
+* /wp-json/wp/v2/posts
+* /wp-json/wp/v2/categories
 
 ---
+
+# Current Phase
+
+## Phase 9
+
+### Case Studies
+
+Status: NEXT
+
+---
+
+# Upcoming Phases
 
 ## Phase 9
 
@@ -385,5 +400,5 @@ git push origin main
 
 Current Next Task:
 
-Phase 8
-Blog System
+Phase 9
+Case Studies
