@@ -137,3 +137,57 @@ export interface WPProject {
     client_name: string;
   };
 }
+
+// ---------------------------------------------------------------------------
+// Testimonials (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Represents a WordPress Testimonial object (wp/v2/testimonial).
+ *
+ * The testimonial quote is stored in `content.rendered`.
+ * Client details are managed by ACF and appear under `acf`.
+ */
+export interface WPTestimonial {
+  /** Unique identifier for the testimonial. */
+  id: number;
+
+  /** URL-friendly slug. */
+  slug: string;
+
+  /** Testimonial title (typically the project/company name). */
+  title: {
+    rendered: string;
+  };
+
+  /** The testimonial quote as HTML. */
+  content: {
+    rendered: string;
+  };
+
+  /** Short excerpt of the testimonial. */
+  excerpt: {
+    rendered: string;
+  };
+
+  /** ID of the featured media attachment — client photo (0 if none). */
+  featured_media: number;
+
+  /** Custom fields exposed by ACF via the REST API. */
+  acf: {
+    /** Client's full name. */
+    client_name: string;
+
+    /** Client's company name. */
+    company: string;
+
+    /** Client's role or designation. */
+    designation: string;
+
+    /** Rating from 1 to 5. */
+    rating: number;
+
+    /** Client's LinkedIn profile URL. */
+    linkedin_url: string;
+  };
+}

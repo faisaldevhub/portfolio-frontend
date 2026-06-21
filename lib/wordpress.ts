@@ -1,4 +1,4 @@
-import { WPPage, WPMedia, WPProject } from "@/types/wordpress";
+import { WPPage, WPMedia, WPProject, WPTestimonial } from "@/types/wordpress";
 
 /**
  * WordPress API Communication Layer
@@ -186,4 +186,24 @@ export async function getProjects(): Promise<WPProject[]> {
 export async function getProjectBySlug(slug: string): Promise<WPProject | null> {
   const projects = await fetchAPI<WPProject[]>(`/project?slug=${slug}`);
   return projects.length > 0 ? projects[0] : null;
+}
+
+// ---------------------------------------------------------------------------
+// Testimonial helpers (Custom Post Type)
+// ---------------------------------------------------------------------------
+
+/**
+ * Fetch all published testimonials.
+ *
+ * Calls the /testimonial endpoint and returns an array
+ * of WPTestimonial objects including ACF custom fields.
+ *
+ * @returns An array of all published testimonials.
+ *
+ * @example
+ *   const testimonials = await getTestimonials();
+ *   testimonials.forEach(t => console.log(t.acf.client_name));
+ */
+export async function getTestimonials(): Promise<WPTestimonial[]> {
+  return fetchAPI<WPTestimonial[]>("/testimonial");
 }

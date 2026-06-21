@@ -1,15 +1,22 @@
 import Hero from "@/components/Hero";
 import AboutPreview from "@/components/AboutPreview";
 import FeaturedProjects from "@/components/FeaturedProjects";
+import FeaturedTestimonials from "@/components/FeaturedTestimonials";
 import ServicesPreview from "@/components/ServicesPreview";
 import ContactCTA from "@/components/ContactCTA";
-import { getAboutPage, getProjects, getMediaById } from "@/lib/wordpress";
+import {
+  getAboutPage,
+  getProjects,
+  getTestimonials,
+  getMediaById,
+} from "@/lib/wordpress";
 
 export default async function Home() {
-  // Fetch About page and all projects in parallel
-  const [aboutPage, allProjects] = await Promise.all([
+  // Fetch About page, projects, and testimonials in parallel
+  const [aboutPage, allProjects, allTestimonials] = await Promise.all([
     getAboutPage(),
     getProjects(),
+    getTestimonials(),
   ]);
 
   // Resolve About featured image
@@ -49,6 +56,34 @@ export default async function Home() {
     })
   );
 
+  // Take the latest 3 testimonials and resolve their client photos in parallel
+  const latestTestimonials = allTestimonials.slice(0, 3);
+
+  const featuredTestimonials = await Promise.all(
+    latestTestimonials.map(async (t) => {
+      let photoUrl: string | null = null;
+      let photoAlt: string | null = null;
+
+      if (t.featured_media > 0) {
+        const media = await getMediaById(t.featured_media);
+        photoUrl = media.source_url;
+        photoAlt = media.alt_text;
+      }
+
+      return {
+        id: t.id,
+        quote: t.excerpt.rendered,
+        clientName: t.acf.client_name,
+        company: t.acf.company,
+        designation: t.acf.designation,
+        rating: t.acf.rating,
+        photoUrl,
+        photoAlt,
+        linkedinUrl: t.acf.linkedin_url,
+      };
+    })
+  );
+
   return (
     <>
       <Hero />
@@ -58,6 +93,7 @@ export default async function Home() {
         imageAlt={aboutImageAlt}
       />
       <FeaturedProjects projects={featuredProjects} />
+      <FeaturedTestimonials testimonials={featuredTestimonials} />
       <ServicesPreview />
       <ContactCTA />
     </>
