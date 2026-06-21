@@ -1,26 +1,31 @@
 /**
  * ContactForm Component
  *
- * Client component that renders a contact form with name, email,
- * subject, and message fields. Handles client-side validation
- * and submission state.
+ * Client component with dark-themed form inputs.
  */
 
 "use client";
 
 import { useState } from "react";
 
+const inputStyles: React.CSSProperties = {
+  width: "100%",
+  padding: "12px 16px",
+  backgroundColor: "var(--bg-elevated)",
+  border: "1px solid var(--border-default)",
+  borderRadius: "var(--radius-btn)",
+  color: "var(--text-primary)",
+  fontSize: 15,
+  outline: "none",
+  transition: "border-color 200ms ease",
+};
+
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
-
-    // Simulate form submission — replace with a real API endpoint
-    // (e.g. a Next.js Route Handler or external service like Formspree)
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setStatus("sent");
@@ -32,99 +37,42 @@ export default function ContactForm() {
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6">Send a Message</h2>
+      <h2 className="text-xl font-semibold mb-6" style={{ color: "var(--text-primary)" }}>Send a Message</h2>
 
       {status === "sent" && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded">
+        <div className="mb-6 p-4 rounded-xl text-sm" style={{ backgroundColor: "rgba(34, 197, 94, 0.1)", border: "1px solid rgba(34, 197, 94, 0.2)", color: "#22c55e" }}>
           Thank you! Your message has been sent successfully.
         </div>
       )}
 
       {status === "error" && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded">
+        <div className="mb-6 p-4 rounded-xl text-sm" style={{ backgroundColor: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", color: "#ef4444" }}>
           Something went wrong. Please try again.
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Name */}
         <div>
-          <label
-            htmlFor="contact-name"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Name
-          </label>
-          <input
-            id="contact-name"
-            name="name"
-            type="text"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-            placeholder="Your name"
-          />
+          <label htmlFor="contact-name" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Name</label>
+          <input id="contact-name" name="name" type="text" required style={inputStyles} placeholder="Your name" onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")} onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border-default)")} />
         </div>
 
-        {/* Email */}
         <div>
-          <label
-            htmlFor="contact-email"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Email
-          </label>
-          <input
-            id="contact-email"
-            name="email"
-            type="email"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-            placeholder="you@example.com"
-          />
+          <label htmlFor="contact-email" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Email</label>
+          <input id="contact-email" name="email" type="email" required style={inputStyles} placeholder="you@example.com" onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")} onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border-default)")} />
         </div>
 
-        {/* Subject */}
         <div>
-          <label
-            htmlFor="contact-subject"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Subject
-          </label>
-          <input
-            id="contact-subject"
-            name="subject"
-            type="text"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-            placeholder="Project inquiry"
-          />
+          <label htmlFor="contact-subject" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Subject</label>
+          <input id="contact-subject" name="subject" type="text" required style={inputStyles} placeholder="Project inquiry" onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")} onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border-default)")} />
         </div>
 
-        {/* Message */}
         <div>
-          <label
-            htmlFor="contact-message"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Message
-          </label>
-          <textarea
-            id="contact-message"
-            name="message"
-            rows={5}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-y"
-            placeholder="Tell me about your project..."
-          />
+          <label htmlFor="contact-message" className="block text-sm font-medium mb-2" style={{ color: "var(--text-secondary)" }}>Message</label>
+          <textarea id="contact-message" name="message" rows={5} required style={{ ...inputStyles, resize: "vertical" as const }} placeholder="Tell me about your project..." onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")} onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border-default)")} />
         </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="w-full px-6 py-3 bg-gray-900 text-white rounded hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
+        <button type="submit" disabled={status === "sending"} className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed">
           {status === "sending" ? "Sending..." : "Send Message"}
         </button>
       </form>

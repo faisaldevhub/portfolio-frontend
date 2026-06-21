@@ -1,9 +1,9 @@
+"use client";
+
 /**
  * TestimonialCard Component
  *
- * Presentational card for displaying a single client testimonial.
- * Shows the quote, star rating, client photo, name, designation, and company.
- * Designed for reuse on the /testimonials page and homepage section.
+ * Premium dark testimonial card with orange stars, quote, and client info.
  */
 
 import Image from "next/image";
@@ -30,13 +30,16 @@ export default function TestimonialCard({
   linkedinUrl,
 }: TestimonialCardProps) {
   return (
-    <article className="bg-white rounded-lg border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+    <article className="card p-6 flex flex-col">
       {/* Star Rating */}
-      <div className="flex gap-1 mb-4">
+      <div className="flex gap-1 mb-5">
         {Array.from({ length: 5 }, (_, i) => (
           <span
             key={i}
-            className={i < rating ? "text-yellow-400" : "text-gray-200"}
+            className="text-sm"
+            style={{
+              color: i < rating ? "var(--accent)" : "var(--bg-elevated)",
+            }}
           >
             ★
           </span>
@@ -45,15 +48,19 @@ export default function TestimonialCard({
 
       {/* Quote */}
       <div
-        className="text-gray-600 text-sm leading-relaxed mb-6 flex-1"
+        className="text-sm leading-relaxed mb-6 flex-1"
+        style={{ color: "var(--text-secondary)" }}
         dangerouslySetInnerHTML={{ __html: quote }}
       />
 
       {/* Client Info */}
-      <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+      <div
+        className="flex items-center gap-3 pt-5 border-t"
+        style={{ borderColor: "var(--border-default)" }}
+      >
         {/* Photo */}
         {photoUrl && (
-          <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+          <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0 ring-2" style={{ borderColor: "var(--border-default)" }}>
             <Image
               src={photoUrl}
               alt={photoAlt ?? clientName}
@@ -65,13 +72,20 @@ export default function TestimonialCard({
 
         {/* Name & Role */}
         <div className="min-w-0">
-          <p className="font-medium text-sm text-gray-900 truncate">
+          <p className="font-medium text-sm truncate" style={{ color: "var(--text-primary)" }}>
             {linkedinUrl ? (
               <a
                 href={linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-gray-600 transition-colors"
+                className="transition-colors duration-200"
+                style={{ color: "var(--text-primary)" }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = "var(--accent)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = "var(--text-primary)")
+                }
               >
                 {clientName}
               </a>
@@ -79,7 +93,7 @@ export default function TestimonialCard({
               clientName
             )}
           </p>
-          <p className="text-xs text-gray-500 truncate">
+          <p className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
             {designation}, {company}
           </p>
         </div>

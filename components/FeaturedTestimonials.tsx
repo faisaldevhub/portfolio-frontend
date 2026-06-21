@@ -1,10 +1,7 @@
 /**
  * FeaturedTestimonials Component
  *
- * Displays a "What Clients Say" section on the homepage.
- * Receives pre-resolved testimonial data as props and renders them
- * using the shared TestimonialCard and TestimonialsGrid components.
- * Includes a "View All Testimonials" CTA link.
+ * Homepage testimonials section with premium dark styling.
  */
 
 import Link from "next/link";
@@ -33,35 +30,43 @@ export default function FeaturedTestimonials({
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="px-6 py-16">
-      <h2 className="text-3xl font-bold mb-2">What Clients Say</h2>
-      <p className="text-gray-600 mb-10 max-w-2xl">
-        Feedback from clients I have had the pleasure of working with.
-      </p>
-
-      <TestimonialsGrid>
-        {testimonials.map((t) => (
-          <TestimonialCard
-            key={t.id}
-            quote={t.quote}
-            clientName={t.clientName}
-            company={t.company}
-            designation={t.designation}
-            rating={t.rating}
-            photoUrl={t.photoUrl}
-            photoAlt={t.photoAlt}
-            linkedinUrl={t.linkedinUrl}
-          />
-        ))}
-      </TestimonialsGrid>
-
-      <div className="mt-10 text-center">
-        <Link
-          href="/testimonials"
-          className="inline-block px-6 py-3 border border-gray-900 text-gray-900 rounded hover:bg-gray-900 hover:text-white transition-colors"
+    <section
+      className="section-spacing"
+      style={{ backgroundColor: "var(--bg-secondary)" }}
+    >
+      <div className="container-main">
+        <p
+          className="text-sm font-semibold tracking-widest uppercase mb-4"
+          style={{ color: "var(--accent)" }}
         >
-          View All Testimonials
-        </Link>
+          Client Feedback
+        </p>
+        <h2 className="heading-section mb-4">What Clients Say</h2>
+        <p className="text-body mb-14 max-w-xl">
+          Feedback from clients I have had the pleasure of working with.
+        </p>
+
+        <TestimonialsGrid>
+          {testimonials.map((t) => (
+            <TestimonialCard
+              key={t.id}
+              quote={t.quote}
+              clientName={t.clientName}
+              company={t.company}
+              designation={t.designation}
+              rating={t.rating}
+              photoUrl={t.photoUrl}
+              photoAlt={t.photoAlt}
+              linkedinUrl={t.linkedinUrl}
+            />
+          ))}
+        </TestimonialsGrid>
+
+        <div className="mt-14 text-center">
+          <Link href="/testimonials" className="btn-secondary">
+            View All Testimonials
+          </Link>
+        </div>
       </div>
     </section>
   );

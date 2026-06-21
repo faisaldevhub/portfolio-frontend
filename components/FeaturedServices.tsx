@@ -1,11 +1,7 @@
 /**
  * FeaturedServices Component
  *
- * Displays a WordPress-driven "Services" section on the homepage.
- * Replaces the previous hardcoded ServicesPreview component.
- * Receives pre-resolved service data as props and renders them
- * using the shared ServiceCard and ServicesGrid components.
- * Includes a "View All Services" CTA link.
+ * Homepage services section with WordPress-driven content.
  */
 
 import Link from "next/link";
@@ -29,32 +25,38 @@ export default function FeaturedServices({ services }: FeaturedServicesProps) {
   if (services.length === 0) return null;
 
   return (
-    <section className="px-6 py-16 bg-gray-50">
-      <h2 className="text-3xl font-bold mb-2">Services</h2>
-      <p className="text-gray-600 mb-10 max-w-2xl">
-        Professional web development services to help your business grow online.
-      </p>
-
-      <ServicesGrid>
-        {services.map((s) => (
-          <ServiceCard
-            key={s.id}
-            slug={s.slug}
-            icon={s.icon}
-            title={s.title}
-            shortDescription={s.shortDescription}
-            pricing={s.pricing}
-          />
-        ))}
-      </ServicesGrid>
-
-      <div className="mt-10 text-center">
-        <Link
-          href="/services"
-          className="inline-block px-6 py-3 border border-gray-900 text-gray-900 rounded hover:bg-gray-900 hover:text-white transition-colors"
+    <section className="section-spacing">
+      <div className="container-main">
+        <p
+          className="text-sm font-semibold tracking-widest uppercase mb-4"
+          style={{ color: "var(--accent)" }}
         >
-          View All Services
-        </Link>
+          What I Offer
+        </p>
+        <h2 className="heading-section mb-4">Services</h2>
+        <p className="text-body mb-14 max-w-xl">
+          Professional web development services to help your business grow
+          online.
+        </p>
+
+        <ServicesGrid>
+          {services.map((s) => (
+            <ServiceCard
+              key={s.id}
+              slug={s.slug}
+              icon={s.icon}
+              title={s.title}
+              shortDescription={s.shortDescription}
+              pricing={s.pricing}
+            />
+          ))}
+        </ServicesGrid>
+
+        <div className="mt-14 text-center">
+          <Link href="/services" className="btn-secondary">
+            View All Services
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -1,9 +1,9 @@
+"use client";
+
 /**
  * BlogCard Component
  *
- * Presentational card for displaying a single blog post.
- * Shows the featured image, date, title, excerpt, and categories.
- * Designed for reuse on the /blog listing page.
+ * Premium dark blog post card with image, date, categories, and excerpt.
  */
 
 import Image from "next/image";
@@ -28,7 +28,6 @@ export default function BlogCard({
   imageAlt,
   categories,
 }: BlogCardProps) {
-  // Format date to a readable string
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -36,31 +35,32 @@ export default function BlogCard({
   });
 
   return (
-    <article className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <article className="card overflow-hidden flex flex-col">
       {/* Featured Image */}
       {imageUrl && (
         <Link href={`/blog/${slug}`}>
-          <div className="relative w-full h-52">
-            <Image
-              src={imageUrl}
-              alt={imageAlt ?? title}
-              fill
-              className="object-cover"
-            />
+          <div className="img-zoom">
+            <div className="relative w-full h-52">
+              <Image
+                src={imageUrl}
+                alt={imageAlt ?? title}
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </Link>
       )}
 
       {/* Card Body */}
-      <div className="p-5">
+      <div className="p-6 flex flex-col flex-1">
         {/* Date & Categories */}
-        <div className="flex flex-wrap items-center gap-2 mb-2">
-          <time className="text-xs text-gray-500">{formattedDate}</time>
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <time className="text-xs" style={{ color: "var(--text-muted)" }}>
+            {formattedDate}
+          </time>
           {categories.map((cat) => (
-            <span
-              key={cat}
-              className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded"
-            >
+            <span key={cat} className="tag" style={{ fontSize: 11, padding: "2px 8px" }}>
               {cat}
             </span>
           ))}
@@ -68,21 +68,28 @@ export default function BlogCard({
 
         {/* Title */}
         <Link href={`/blog/${slug}`}>
-          <h3 className="text-xl font-semibold mb-2 hover:text-gray-600 transition-colors">
+          <h3
+            className="text-lg font-semibold mb-3 transition-colors duration-200"
+            style={{ color: "var(--text-primary)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
+          >
             {title}
           </h3>
         </Link>
 
         {/* Excerpt */}
         <div
-          className="text-gray-600 text-sm mb-4 line-clamp-3"
+          className="text-sm leading-relaxed mb-5 flex-1 line-clamp-3"
+          style={{ color: "var(--text-secondary)" }}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
 
         {/* Read More */}
         <Link
           href={`/blog/${slug}`}
-          className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
+          className="text-sm font-medium transition-colors duration-200"
+          style={{ color: "var(--accent)" }}
         >
           Read More →
         </Link>

@@ -1,10 +1,7 @@
 /**
  * ServiceCard Component
  *
- * Presentational card for displaying a single service.
- * Shows an icon, title, short description, and pricing.
- * Links to the full service detail page.
- * Designed for reuse on the /services page and homepage section.
+ * Premium dark service card with icon, description, pricing, and accent CTA.
  */
 
 import Link from "next/link";
@@ -25,25 +22,42 @@ export default function ServiceCard({
   pricing,
 }: ServiceCardProps) {
   return (
-    <article className="bg-white rounded-lg border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+    <article className="card p-6 flex flex-col">
       {/* Icon */}
-      {icon && <span className="text-3xl mb-4">{icon}</span>}
+      {icon && (
+        <div
+          className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-2xl"
+          style={{
+            backgroundColor: "var(--accent-glow)",
+            border: "1px solid rgba(255, 122, 0, 0.15)",
+          }}
+        >
+          {icon}
+        </div>
+      )}
 
       {/* Title */}
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <h3 className="text-lg font-semibold mb-2" style={{ color: "var(--text-primary)" }}>
+        {title}
+      </h3>
 
-      {/* Short Description */}
-      <p className="text-gray-600 text-sm mb-4 flex-1">{shortDescription}</p>
+      {/* Description */}
+      <p className="text-sm leading-relaxed mb-5 flex-1" style={{ color: "var(--text-secondary)" }}>
+        {shortDescription}
+      </p>
 
       {/* Pricing */}
       {pricing && (
-        <p className="text-sm font-medium text-gray-900 mb-4">{pricing}</p>
+        <p className="text-sm font-semibold mb-5" style={{ color: "var(--accent)" }}>
+          {pricing}
+        </p>
       )}
 
-      {/* Learn More Link */}
+      {/* CTA */}
       <Link
         href={`/services/${slug}`}
-        className="inline-block px-4 py-2 bg-gray-900 text-white text-sm rounded hover:bg-gray-700 transition-colors text-center"
+        className="btn-secondary w-full text-center"
+        style={{ padding: "10px 20px", fontSize: 14 }}
       >
         Learn More
       </Link>

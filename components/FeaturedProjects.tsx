@@ -1,10 +1,7 @@
 /**
  * FeaturedProjects Component
  *
- * Displays a "Featured Projects" section on the homepage.
- * Receives pre-resolved project data as props and renders them
- * using the shared ProjectCard and ProjectsGrid components.
- * Includes a "View All Projects" CTA link.
+ * Homepage featured projects section with premium dark styling.
  */
 
 import Link from "next/link";
@@ -30,34 +27,39 @@ export default function FeaturedProjects({ projects }: FeaturedProjectsProps) {
   if (projects.length === 0) return null;
 
   return (
-    <section className="px-6 py-16 bg-gray-50">
-      <h2 className="text-3xl font-bold mb-2">Featured Projects</h2>
-      <p className="text-gray-600 mb-10 max-w-2xl">
-        A selection of recent projects built for clients and businesses.
-      </p>
-
-      <ProjectsGrid>
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            slug={project.slug}
-            title={project.title}
-            excerpt={project.excerpt}
-            imageUrl={project.imageUrl}
-            imageAlt={project.imageAlt}
-            clientName={project.clientName}
-            techStack={project.techStack}
-          />
-        ))}
-      </ProjectsGrid>
-
-      <div className="mt-10 text-center">
-        <Link
-          href="/projects"
-          className="inline-block px-6 py-3 border border-gray-900 text-gray-900 rounded hover:bg-gray-900 hover:text-white transition-colors"
+    <section className="section-spacing">
+      <div className="container-main">
+        <p
+          className="text-sm font-semibold tracking-widest uppercase mb-4"
+          style={{ color: "var(--accent)" }}
         >
-          View All Projects
-        </Link>
+          Portfolio
+        </p>
+        <h2 className="heading-section mb-4">Featured Projects</h2>
+        <p className="text-body mb-14 max-w-xl">
+          A selection of recent projects built for clients and businesses.
+        </p>
+
+        <ProjectsGrid>
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              slug={project.slug}
+              title={project.title}
+              excerpt={project.excerpt}
+              imageUrl={project.imageUrl}
+              imageAlt={project.imageAlt}
+              clientName={project.clientName}
+              techStack={project.techStack}
+            />
+          ))}
+        </ProjectsGrid>
+
+        <div className="mt-14 text-center">
+          <Link href="/projects" className="btn-secondary">
+            View All Projects
+          </Link>
+        </div>
       </div>
     </section>
   );

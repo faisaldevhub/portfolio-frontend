@@ -1,9 +1,7 @@
 /**
  * FeaturedCaseStudies Component
  *
- * Displays a "Case Studies" section on the homepage.
- * Receives pre-resolved case study data as props.
- * Includes a "View All Case Studies" CTA link.
+ * Homepage case studies section with premium styling.
  */
 
 import Link from "next/link";
@@ -32,35 +30,43 @@ export default function FeaturedCaseStudies({
   if (caseStudies.length === 0) return null;
 
   return (
-    <section className="px-6 py-16">
-      <h2 className="text-3xl font-bold mb-2">Case Studies</h2>
-      <p className="text-gray-600 mb-10 max-w-2xl">
-        In-depth looks at how I helped clients solve real business challenges.
-      </p>
-
-      <CaseStudiesGrid>
-        {caseStudies.map((cs) => (
-          <CaseStudyCard
-            key={cs.id}
-            slug={cs.slug}
-            title={cs.title}
-            clientName={cs.clientName}
-            industry={cs.industry}
-            challenge={cs.challenge}
-            technologies={cs.technologies}
-            imageUrl={cs.imageUrl}
-            imageAlt={cs.imageAlt}
-          />
-        ))}
-      </CaseStudiesGrid>
-
-      <div className="mt-10 text-center">
-        <Link
-          href="/case-studies"
-          className="inline-block px-6 py-3 border border-gray-900 text-gray-900 rounded hover:bg-gray-900 hover:text-white transition-colors"
+    <section
+      className="section-spacing"
+      style={{ backgroundColor: "var(--bg-secondary)" }}
+    >
+      <div className="container-main">
+        <p
+          className="text-sm font-semibold tracking-widest uppercase mb-4"
+          style={{ color: "var(--accent)" }}
         >
-          View All Case Studies
-        </Link>
+          In-Depth Work
+        </p>
+        <h2 className="heading-section mb-4">Case Studies</h2>
+        <p className="text-body mb-14 max-w-xl">
+          How I helped clients solve real business challenges.
+        </p>
+
+        <CaseStudiesGrid>
+          {caseStudies.map((cs) => (
+            <CaseStudyCard
+              key={cs.id}
+              slug={cs.slug}
+              title={cs.title}
+              clientName={cs.clientName}
+              industry={cs.industry}
+              challenge={cs.challenge}
+              technologies={cs.technologies}
+              imageUrl={cs.imageUrl}
+              imageAlt={cs.imageAlt}
+            />
+          ))}
+        </CaseStudiesGrid>
+
+        <div className="mt-14 text-center">
+          <Link href="/case-studies" className="btn-secondary">
+            View All Case Studies
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -14,9 +14,17 @@ export default async function SlugPage({
   }
 
   return (
-    <main>
-      <h1>{page.title.rendered}</h1>
-      <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
-    </main>
+    <article>
+      <section className="section-spacing" style={{ paddingTop: 140, backgroundColor: "var(--bg-secondary)" }}>
+        <div className="container-main max-w-4xl">
+          <h1 className="heading-section">{page.title.rendered}</h1>
+        </div>
+      </section>
+      <section className="section-spacing">
+        <div className="container-main max-w-4xl">
+          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+        </div>
+      </section>
+    </article>
   );
 }
